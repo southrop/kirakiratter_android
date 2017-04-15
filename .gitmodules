@@ -1,0 +1,3 @@
+[submodule "jastodon"]
+	path = jastodon
+	url = https://github.com/southrop/jastodon
