@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Kirakiratter</string>
     <string name="app_name_launcher">Kirakiratter</string>
+
+    <!-- LoginActivity -->
+    <string name="login_hint_domain">Instance domain</string>
+    <string name="login_login">Login</string>
 </resources>
