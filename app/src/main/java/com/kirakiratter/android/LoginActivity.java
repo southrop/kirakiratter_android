@@ -39,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -55,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState");
+
         outState.putString("domain", domain);
         outState.putString("client_id", clientId);
         outState.putString("client_secret", clientSecret);
@@ -63,22 +67,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void tryLogin(View view) {
+        Log.d(TAG, "tryLogin");
+
         String domain = sanitiseDomain(domainEditText.getText().toString());
 
         String storedClientId = preferences.getString(domain + "_client_id", null);
         String storedClientSecret = preferences.getString(domain + "_client_secret", null);
 
         if (storedClientId != null && storedClientSecret != null) {
-            Log.d(TAG, "Found stored client tokens");
+            Log.i(TAG, "Found stored client tokens");
             // TODO: Request an auth token with stored client tokens
             login();
         } else {
-            registerApp();
+            Log.i(TAG, "No stored tokens found");
+            registerApp(domain);
         }
     }
 
     @NonNull
     private String sanitiseDomain(@NonNull String domain) {
+        Log.d(TAG, "sanitiseDomain");
+
         // Check if http or https was included in domain string
         if (domain.startsWith("http")) {
             domain = domain.replaceFirst("https?:\\/\\/", "");
@@ -99,7 +108,9 @@ public class LoginActivity extends AppCompatActivity {
         return domain.trim();
     }
 
-    private void registerApp() {
+    private void registerApp(final String domain) {
+        Log.d(TAG, "registerApp");
+
         Callback<OAuthTokens> callback = new Callback<OAuthTokens>() {
             @Override
             public void onResponse(Call<OAuthTokens> call, Response<OAuthTokens> response) {
@@ -137,6 +148,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
+        Log.d(TAG, "login");
+
         if (clientId == null && clientSecret == null) {
             return;
         }
