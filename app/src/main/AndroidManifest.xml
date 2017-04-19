@@ -2,36 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kirakiratter.android">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:label="@string/app_name_launcher"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-        <activity android:name=".MainActivity">
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/redirect_uri_host"
+                    android:scheme="@string/redirect_uri_scheme" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".TitleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:host="@string/redirect_uri_host"
-                    android:scheme="@string/redirect_uri_scheme"
-                    android:path="@string/redirect_uri_path"/>
-            </intent-filter>
-        </activity>
-
     </application>
 
 </manifest>

@@ -7,6 +7,5 @@
 
     <!-- OAuth -->
     <string name="redirect_uri_scheme" translatable="false">kkt</string>
-    <string name="redirect_uri_host" translatable="false">com.kirakiratter.android</string>
-    <string name="redirect_uri_path" translatable="false">/oauth2redirect</string>
+    <string name="redirect_uri_host" translatable="false">oauth2redirect</string>
 </resources>
