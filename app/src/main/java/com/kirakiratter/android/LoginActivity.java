@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnTextChanged(value = R.id.edittext_domain, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    private void unsetError() {
+    void unsetError() {
         domainEditText.setError(null);
     }
 
