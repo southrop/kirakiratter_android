@@ -20,7 +20,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="@string/redirect_uri_host"
+                    android:scheme="@string/redirect_uri_scheme"
+                    android:path="@string/redirect_uri_path"/>
+            </intent-filter>
+        </activity>
 
     </application>
 

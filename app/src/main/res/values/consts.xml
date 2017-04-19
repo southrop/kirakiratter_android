@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="client_name" translatable="false">Kirakiratter</string>
+    <string name="app_website" translatable="false">http://kirakiratter.com</string>
+
+    <string name="default_domain" translatable="false">kirakiratter.com</string>
+
+    <!-- OAuth -->
+    <string name="redirect_uri_scheme" translatable="false">kkt</string>
+    <string name="redirect_uri_host" translatable="false">com.kirakiratter.android</string>
+    <string name="redirect_uri_path" translatable="false">/oauth2redirect</string>
+</resources>

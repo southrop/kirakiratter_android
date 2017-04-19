@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textUri"
                 android:hint="@string/login_hint_domain"
+                android:text="@string/default_domain"
                 android:ems="10" />
 
         </android.support.design.widget.TextInputLayout>
@@ -40,7 +41,7 @@
             android:layout_marginTop="4dp"
             android:textColor="@android:color/white"
             android:text="@string/login_login"
-            android:onClick="login" />
+            android:onClick="tryLogin" />
 
     </LinearLayout>
 </ScrollView>
