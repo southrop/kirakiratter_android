@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.edittext_domain)
     TextInputEditText domainEditText;
 
-    private MastodonApiClient mastodonApi;
     private SharedPreferences preferences;
 
     private String domain = null;
@@ -58,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mastodonApi = new MastodonApiClient(OkHttpClientHelper.getOkHttpClient(), domain);
 
         redirectUrl = getString(R.string.redirect_uri_scheme) + "://" + getString(R.string.redirect_uri_host);
     }
@@ -114,15 +112,18 @@ public class LoginActivity extends AppCompatActivity {
     public void tryLogin(View view) {
         Log.d(TAG, "tryLogin");
 
-        String domain = sanitiseDomain(domainEditText.getText().toString());
+        domain = sanitiseDomain(domainEditText.getText().toString());
 
         String storedClientId = preferences.getString(domain + "_client_id", null);
         String storedClientSecret = preferences.getString(domain + "_client_secret", null);
 
         if (storedClientId != null && storedClientSecret != null) {
             Log.i(TAG, "Found stored client tokens");
-            Log.i(TAG, "clientId:     " + clientId);
-            Log.i(TAG, "clientSecret: " + clientSecret);
+            Log.i(TAG, "clientId:     " + storedClientId);
+            Log.i(TAG, "clientSecret: " + storedClientSecret);
+
+            clientId = storedClientId;
+            clientSecret = storedClientSecret;
 
             login();
         } else {
@@ -188,6 +189,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        MastodonApiClient mastodonApi = new MastodonApiClient(OkHttpClientHelper.getOkHttpClient(), domain);
         mastodonApi.getAuthService().registerClient(getString(R.string.app_name), redirectUrl,
                 APP_SCOPE, getString(R.string.app_website))
         .enqueue(callback);
@@ -252,7 +254,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("active_access_token", accessToken);
                     editor.apply();
 
-                    Intent intent = new Intent(LoginActivity.this, TitleActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -263,6 +265,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             };
 
+            MastodonApiClient mastodonApi = new MastodonApiClient(OkHttpClientHelper.getOkHttpClient(), domain);
             mastodonApi.getAuthService().getAccessToken(clientId, clientSecret, redirectUrl,
                     code, "authorization_code").enqueue(callback);
         } else {
