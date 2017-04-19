@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import jastodon.MastodonApiClient;
-import jastodon.entities.AppTokens;
+import jastodon.entities.OAuthTokens;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,8 +73,6 @@ public class LoginActivity extends AppCompatActivity {
             // TODO: Request an auth token with stored client tokens
             login();
         } else {
-            Log.d(TAG, "No tokens found");
-            // TODO: register the app with the domain
             registerApp();
         }
     }
@@ -102,15 +100,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void registerApp() {
-        Callback<AppTokens> callback = new Callback<AppTokens>() {
+        Callback<OAuthTokens> callback = new Callback<OAuthTokens>() {
             @Override
-            public void onResponse(Call<AppTokens> call, Response<AppTokens> response) {
+            public void onResponse(Call<OAuthTokens> call, Response<OAuthTokens> response) {
                 if (!response.isSuccessful()) {
                     Log.e(TAG, "registerApp Failed: " + response.message());
                     domainEditText.setError("Failed to register with " + domain + ": " + response.message());
                     return;
                 }
-                AppTokens tokens = response.body();
+                OAuthTokens tokens = response.body();
                 clientId = tokens.clientId;
                 clientSecret = tokens.clientSecret;
 
@@ -123,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AppTokens> call, Throwable t) {
+            public void onFailure(Call<OAuthTokens> call, Throwable t) {
                 Log.e(TAG, "registerApp Failed");
                 domainEditText.setError("Failed to register with " + domain);
             }
@@ -139,7 +137,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
+        if (clientId == null && clientSecret == null) {
+            return;
+        }
 
+        // TODO: Login
     }
 
     @OnTextChanged(value = R.id.edittext_domain, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
